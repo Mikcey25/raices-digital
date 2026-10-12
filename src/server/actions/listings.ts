@@ -48,4 +48,34 @@ export async function createListing(formData: FormData) {
     redirect("/dashboard/market?error=validation");
   }
 
- 
+  // Verificar permisos según tipo de publicación
+  if (parsed.data.type === "SELL") {
+    if (!canCreateSellListing(session.role as Role)) {
+      redirect("/dashboard/market?error=forbidden");
+    }
+  } else if (parsed.data.type === "BUY") {
+    if (!canCreateBuyListing(session.role as Role)) {
+      redirect("/dashboard/market?error=forbidden");
+    }
+  } else {
+    redirect("/dashboard/market?error=validation");
+  }
+
+  const communityAllowed = await isCommunityAllowed(
+    session,
+    parsed.data.communityId
+  );
+
+  if (!communityAllowed) {
+    redirect("/dashboard/market?error=community");
+  }
+
+  const productCount = await prisma.product.count({
+    where: {
+      id: parsed.data.productId,
+    },
+  });
+
+  if (productCount === 0) {
+    redirect("/dashboard/market?error=product");
+  }
