@@ -79,3 +79,27 @@ export async function createListing(formData: FormData) {
   if (productCount === 0) {
     redirect("/dashboard/market?error=product");
   }
+
+  try {
+    await prisma.listing.create({
+      data: {
+        type: parsed.data.type,
+        productId: parsed.data.productId,
+        communityId: parsed.data.communityId,
+        createdById: session.id,
+        quantity: parsed.data.quantity,
+        price: parsed.data.price,
+        currency: parsed.data.currency,
+        description: parsed.data.description,
+        status: "OPEN",
+      },
+    });
+  } catch {
+    redirect("/dashboard/market?error=db");
+  }
+
+  revalidatePath("/dashboard/market");
+  revalidatePath("/dashboard");
+
+  redirect("/dashboard/market?created=1");
+}
