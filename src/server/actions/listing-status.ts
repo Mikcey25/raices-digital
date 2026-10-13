@@ -38,3 +38,21 @@ export async function updateListingStatus(formData: FormData) {
     redirect("/dashboard/market?error=listing");
   }
 
+  // Verificar que el usuario sea el creador o ADMIN
+  const listing = await prisma.listing.findUnique({
+    where: {
+      id: parsed.data.listingId,
+    },
+    select: {
+      createdById: true,
+    },
+  });
+
+  if (!listing) {
+    redirect("/dashboard/market?error=listing");
+  }
+
+  if (listing.createdById !== session.id && session.role !== Roles.ADMIN) {
+    redirect("/dashboard/market?error=forbidden");
+  }
+
