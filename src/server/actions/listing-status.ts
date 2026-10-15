@@ -56,3 +56,21 @@ export async function updateListingStatus(formData: FormData) {
     redirect("/dashboard/market?error=forbidden");
   }
 
+  try {
+    await prisma.listing.update({
+      where: {
+        id: parsed.data.listingId,
+      },
+      data: {
+        status: parsed.data.status,
+      },
+    });
+  } catch {
+    redirect("/dashboard/market?error=db");
+  }
+
+  revalidatePath("/dashboard/market");
+  revalidatePath("/dashboard");
+
+  redirect("/dashboard/market?updated=1");
+}
