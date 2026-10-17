@@ -122,3 +122,46 @@ export default async function MarketPage({
           </p>
         </div>
 
+        <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+          <p className="text-sm text-slate-400">Compras</p>
+          <p className="mt-2 text-4xl font-bold text-white">
+            {buyListings.length}
+          </p>
+        </div>
+      </div>
+
+      {canCreate ? (
+        <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+          <h3 className="text-lg font-semibold text-white">
+            Crear publicación
+          </h3>
+
+          {communities.length === 0 || products.length === 0 ? (
+            <p className="mt-4 text-sm text-slate-400">
+              {communities.length === 0
+                ? "No tienes comunidades asignadas para crear publicaciones."
+                : "No hay productos registrados. Primero crea productos en el catálogo."}
+            </p>
+          ) : (
+            <form
+              action={createListing}
+              className="mt-6 grid gap-4 md:grid-cols-2"
+            >
+              <div>
+                <label
+                  htmlFor="listing-type"
+                  className="mb-2 block text-sm font-medium text-slate-300"
+                >
+                  Tipo de publicación
+                </label>
+
+                <select
+                  id="listing-type"
+                  name="type"
+                  required
+                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400"
+                >
+                  {canCreateSell && <option value="SELL">Venta</option>}
+                  {canCreateBuy && <option value="BUY">Compra</option>}
+                </select>
+              </div>
