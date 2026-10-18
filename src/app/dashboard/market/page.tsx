@@ -165,3 +165,33 @@ export default async function MarketPage({
                   {canCreateBuy && <option value="BUY">Compra</option>}
                 </select>
               </div>
+
+              <div>
+                <label
+                  htmlFor="listing-product"
+                  className="mb-2 block text-sm font-medium text-slate-300"
+                >
+                  Producto
+                </label>
+
+                <select
+                  id="listing-product"
+                  name="productId"
+                  required
+                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400"
+                >
+                  <option value="">Selecciona un producto</option>
+
+                  {products.map((product) => (
+                    <option key={product.id} value={product.id}>
+                      {product.name} ({product.unit})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="listing-community"
+                  className="mb-2 block text-sm font-medium text-slate-300"
+                >
