@@ -195,3 +195,62 @@ export default async function MarketPage({
                   htmlFor="listing-community"
                   className="mb-2 block text-sm font-medium text-slate-300"
                 >
+                  Comunidad
+                </label>
+
+                <select
+                  id="listing-community"
+                  name="communityId"
+                  required
+                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400"
+                >
+                  <option value="">Selecciona una comunidad</option>
+
+                  {communities.map((community) => (
+                    <option key={community.id} value={community.id}>
+                      {community.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="listing-quantity"
+                  className="mb-2 block text-sm font-medium text-slate-300"
+                >
+                  Cantidad
+                </label>
+
+                <input
+                  id="listing-quantity"
+                  name="quantity"
+                  type="number"
+                  min="0.01"
+                  step="0.01"
+                  required
+                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400"
+                  placeholder="10.5"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="listing-price"
+                  className="mb-2 block text-sm font-medium text-slate-300"
+                >
+                  Precio unitario
+                </label>
+
+                <input
+                  id="listing-price"
+                  name="price"
+                  type="number"
+                  min="0.01"
+                  step="0.01"
+                  required
+                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400"
+                  placeholder="25.00"
+                />
+              </div>
+
